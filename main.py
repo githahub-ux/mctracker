@@ -12,7 +12,7 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 
-HOST = "127.0.0.1"
+HOST = "0.0.0.0"
 PORT = 8000
 DEFAULT_MC_HOST = "donutsmp.net"
 DEFAULT_MC_PORT = 25565
