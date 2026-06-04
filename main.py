@@ -153,7 +153,7 @@ INDEX_HTML = """<!doctype html>
 
     .controls {
       display: grid;
-      grid-template-columns: minmax(180px, 0.9fr) minmax(220px, 1.2fr) 118px auto;
+      grid-template-columns: minmax(210px, 1fr) 118px auto auto;
       gap: 10px;
       align-items: end;
       padding: 14px;
@@ -168,8 +168,7 @@ INDEX_HTML = """<!doctype html>
       font-weight: 700;
     }
 
-    input,
-    select {
+    input {
       width: 100%;
       min-height: 42px;
       border: 1px solid #3b484f;
@@ -180,8 +179,7 @@ INDEX_HTML = """<!doctype html>
       outline: none;
     }
 
-    input:focus,
-    select:focus {
+    input:focus {
       border-color: var(--focus);
       box-shadow: 0 0 0 3px rgba(124, 199, 255, 0.18);
     }
@@ -207,18 +205,6 @@ INDEX_HTML = """<!doctype html>
       color: var(--text);
       border-color: #3a464d;
       background: #20282e;
-    }
-
-    button.danger {
-      color: #ffe8e8;
-      border-color: rgba(255, 107, 107, 0.42);
-      background: #3a2023;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      filter: grayscale(0.45);
-      opacity: 0.65;
     }
 
     button:hover {
@@ -379,7 +365,6 @@ INDEX_HTML = """<!doctype html>
     }
 
     .message {
-      grid-column: 1 / -1;
       min-height: 22px;
       color: var(--muted);
       font-size: 0.9rem;
@@ -451,10 +436,6 @@ INDEX_HTML = """<!doctype html>
 
     <form class="panel controls" id="serverForm">
       <label>
-        Saved histories
-        <select id="serverSelect" name="server"></select>
-      </label>
-      <label>
         Server address
         <input id="hostInput" name="host" autocomplete="off" spellcheck="false" placeholder="example.com">
       </label>
@@ -465,7 +446,6 @@ INDEX_HTML = """<!doctype html>
       <div class="button-row">
         <button type="submit" id="trackButton">Track</button>
         <button type="button" class="secondary" id="refreshButton">Refresh</button>
-        <button type="button" class="danger" id="clearButton">Clear history</button>
       </div>
       <div class="message" id="message" aria-live="polite"></div>
     </form>
@@ -522,12 +502,10 @@ INDEX_HTML = """<!doctype html>
 
     const els = {
       form: document.getElementById("serverForm"),
-      select: document.getElementById("serverSelect"),
       host: document.getElementById("hostInput"),
       port: document.getElementById("portInput"),
       track: document.getElementById("trackButton"),
       refresh: document.getElementById("refreshButton"),
-      clear: document.getElementById("clearButton"),
       message: document.getElementById("message"),
       activeServer: document.getElementById("activeServer"),
       statusDot: document.getElementById("statusDot"),
@@ -555,7 +533,6 @@ INDEX_HTML = """<!doctype html>
     }
 
     let history = [];
-    let servers = [];
     let currentServer = {
       host: localStorage.getItem("mcTrackerHost") || CONFIG_DEFAULT_HOST,
       port: Number(localStorage.getItem("mcTrackerPort") || CONFIG_DEFAULT_PORT)
